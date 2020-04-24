@@ -69,16 +69,62 @@ RUN bash -c 'source /headless/.bashrc'
 
 ## install gazebo
 
-# setup sources list
+# install gazebo9
+# for installation of gazebo9
+## setup sources list
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-
-# setup keys
-RUN bash -c 'wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -'
-
-# install gazebo
+## setup keys
+RUN bash -c 'wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -'
+## install gazebo9 (latest version)
 RUN apt-get update && apt-get install -y \
-	gazebo11
+  gazebo9 \
+  libgazebo9-dev \
+  ros-eloquent-gazebo-ros-pkgs \
+  ros-eloquent-gazebo-ros \
+  ros-eloquent-gazebo-msgs \
+  ros-eloquent-gazebo-dev \
+  && rm -rf /var/lib/apt/lists/*
 
+
+
+# ## install gazebo11
+# RUN apt-get update && apt-get install -y \
+#   gazebo11 \
+#     && rm -rf /var/lib/apt/lists/*
+
+# install turtlesim
+RUN apt update && apt install -y \
+    ros-eloquent-turtlesim \
+    && rm -rf /var/lib/apt/lists/*
+
+# install ros2 argments autoocmplete
+RUN apt install -y \
+    python3-argcomplete \
+    && rm -rf /var/lib/apt/lists/*
+
+## rmf demos environment
+# install mercurial pakage to use hg
+RUN apt-get update && apt-get install -y \
+    mercurial \
+    && rm -rf /var/lib/apt/lists/*
+
+# dependencies
+RUN apt update && apt install -y \
+  git cmake wget python3-vcstool \
+  qt5-default libeigen3-dev \
+  libwebsocketpp-dev \
+  libboost-all-dev curl \
+  python3-shapely python3-yaml \
+  && rm -rf /var/lib/apt/lists/*
+
+# rosdep dependencies
+RUN apt-get update && apt-get install -y \
+  libccd-dev \
+  libfcl-dev \
+  ros-eloquent-launch-xml \
+  libyaml-cpp-dev \
+  python-shapely \
+  && rm -rf /var/lib/apt/lists/*
 
 # switch back to 1000:0
 USER 1000
