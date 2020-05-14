@@ -85,11 +85,12 @@ RUN apt-get update && apt-get install -y \
   ros-eloquent-gazebo-dev \
   && rm -rf /var/lib/apt/lists/*
 
-
+## install gazebo_ros_pkgs
+RUN apt update && apt install ros-$ROS_DISTRO-gazebo-ros-pkgs
 
 # ## install gazebo11
 # RUN apt-get update && apt-get install -y \
-#   gazebo11 \
+# 	gazebo11 \
 #     && rm -rf /var/lib/apt/lists/*
 
 # install turtlesim
