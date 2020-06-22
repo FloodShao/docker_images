@@ -2,7 +2,7 @@
 
 FROM ubuntu:18.04
 
-MAINTAINER Simon Hofmann "simon.hofmann@consol.de"
+MAINTAINER Fred Shao "fredshao@openrobotics.org"
 ENV REFRESHED_AT 2018-10-29
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
@@ -30,7 +30,7 @@ ENV HOME=/headless \
     NO_VNC_HOME=/headless/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=1280x1024 \
+    VNC_RESOLUTION=1440x900 \
     VNC_PW=vncpassword \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME

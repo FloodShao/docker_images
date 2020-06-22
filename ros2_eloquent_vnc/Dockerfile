@@ -3,7 +3,9 @@
 # Base system ubuntu-bionic-vnc-base
 
 FROM floodshao/ubuntu-bionic-vnc-base
-ENV REFRESHED_AT 2018-03-18
+
+MAINTAINER Fred Shao "fred@openrobotics.org"
+ENV REFRESHED_AT 2020-06-22
 
 # The original USER is configured as 1000:0, without authentic for package install
 # switch to root user
