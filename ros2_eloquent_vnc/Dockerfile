@@ -3,9 +3,7 @@
 # Base system ubuntu-bionic-vnc-base
 
 FROM floodshao/ubuntu-bionic-vnc-base
-
-MAINTAINER Fred Shao "fred@openrobotics.org"
-ENV REFRESHED_AT 2020-06-22
+ENV REFRESHED_AT 2020-06-23
 
 # The original USER is configured as 1000:0, without authentic for package install
 # switch to root user
@@ -62,7 +60,7 @@ RUN pip3 install -U \
 
 # install ros2 packages
 RUN apt update && apt install -y \
-    ros-eloquent-desktop \
+    ros-$ROS_DISTRO-desktop \
     && rm -rf /var/lib/apt/lists/*
 
 # source environment
@@ -81,24 +79,20 @@ RUN bash -c 'wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-k
 RUN apt-get update && apt-get install -y \
   gazebo9 \
   libgazebo9-dev \
-  ros-eloquent-gazebo-ros-pkgs \
-  ros-eloquent-gazebo-ros \
-  ros-eloquent-gazebo-msgs \
-  ros-eloquent-gazebo-dev \
+  ros-$ROS_DISTRO-gazebo-ros-pkgs \
+  ros-$ROS_DISTRO-gazebo-ros \
+  ros-$ROS_DISTRO-gazebo-msgs \
+  ros-$ROS_DISTRO-gazebo-dev \
   && rm -rf /var/lib/apt/lists/*
 
-## install gazebo_ros_pkgs
-RUN apt update && apt install ros-$ROS_DISTRO-gazebo-ros-pkgs
+# dependencies for source install ignition
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+RUN wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+RUN apt-get update
 
-# ## install gazebo11
-# RUN apt-get update && apt-get install -y \
-# 	gazebo11 \
-#     && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y g++-8
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 --slave /usr/bin/gcov gcov /usr/bin/gcov-8
 
-# install turtlesim
-RUN apt update && apt install -y \
-    ros-eloquent-turtlesim \
-    && rm -rf /var/lib/apt/lists/*
 
 # install ros2 argments autoocmplete
 RUN apt install -y \
@@ -112,22 +106,92 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # dependencies
-RUN apt update && apt install -y \
-  git cmake wget python3-vcstool \
-  qt5-default libeigen3-dev \
+RUN apt update && sudo apt install -y \
+  cmake \
+  wget \
+  python3-vcstool \
+  qt5-default \
+  libeigen3-dev \
   libwebsocketpp-dev \
-  libboost-all-dev curl \
-  python3-shapely python3-yaml \
+  libboost-all-dev \
+  curl \
+  python3-shapely \
+  python3-yaml \
+  python3-requests \
   && rm -rf /var/lib/apt/lists/*
 
 # rosdep dependencies
 RUN apt-get update && apt-get install -y \
   libccd-dev \
   libfcl-dev \
-  ros-eloquent-launch-xml \
+  ros-$ROS_DISTRO-launch-xml \
   libyaml-cpp-dev \
   python-shapely \
   && rm -rf /var/lib/apt/lists/*
+
+# install thirdpart_lib dependencies
+## for Menge
+RUN apt-get update && apt-get install -y \
+  libsdl2-ttf-dev \
+  libsdl2-image-dev \
+  libsdl2-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+# install gdb
+RUN apt-get update && apt-get install -y gdb \
+  && rm -rf /var/lib/apt/lists/*
+
+# source install ignition dependencies
+RUN apt-get update && apt-get install -y \
+  freeglut3-dev \
+  libavcodec-dev \
+  libavdevice-dev \
+  libavformat-dev \
+  libavutil-dev \
+  libdart6-collision-ode-dev \
+  libdart6-dev \
+  libdart6-utils-urdf-dev \
+  libfreeimage-dev \
+  libgflags-dev \
+  libglew-dev \
+  libgts-dev \
+  libogre-1.9-dev \
+  libogre-2.1-dev \
+  libprotobuf-dev \
+  libprotobuf-dev \
+  libprotoc-dev \
+  libqt5core5a \
+  libswscale-dev \
+  libtinyxml2-dev \
+  libtinyxml-dev \
+  pkg-config \
+  protobuf-compiler \
+  python \
+  qml-module-qt-labs-folderlistmodel \
+  qml-module-qt-labs-settings \
+  qml-module-qtquick2 \
+  qml-module-qtquick-controls \
+  qml-module-qtquick-controls2 \
+  qml-module-qtquick-dialogs \
+  qml-module-qtquick-layouts \
+  qml-module-qtqml-models2 \
+  qtbase5-dev \
+  qtdeclarative5-dev \
+  qtquickcontrols2-5-dev \
+  ruby \
+  ruby-ronn \
+  uuid-dev \
+  libzip-dev \
+  libjsoncpp-dev \
+  libcurl4-openssl-dev \
+  libyaml-dev \
+  libzmq3-dev \
+  libsqlite3-dev \
+  libwebsockets-dev \
+  swig \
+  ruby-dev \
+  && rm -rf /var/lib/apt/lists/*
+
 
 # switch back to 1000:0
 USER 1000

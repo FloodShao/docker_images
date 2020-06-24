@@ -1,1 +1,1 @@
-docker build -t floodshao/ros2-eloquent:gazebo9-dev .
+docker build -t floodshao/ros2-eloquent:osrf-dev-gdb .

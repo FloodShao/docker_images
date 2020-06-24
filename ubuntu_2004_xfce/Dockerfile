@@ -3,7 +3,7 @@
 FROM ubuntu:20.04
 
 MAINTAINER Fred Shao "fred@openrobotics.org"
-ENV REFRESHED_AT 2018-10-29
+ENV REFRESHED_AT 2020-06-22
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Ubuntu" \
