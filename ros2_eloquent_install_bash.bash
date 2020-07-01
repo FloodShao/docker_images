@@ -11,7 +11,7 @@ sudo apt-get update && sudo apt-get install -q -y \
 # setup keys
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 # setup sources list
-sudo echo "deb http://packages.ros.org/ros2/ubuntu bionic main" > /etc/apt/sources.list.d/ros2-latest.list
+sudo echo "deb http://packages.ros.org/ros2/ubuntu bionic main" >> /etc/apt/sources.list.d/ros2-latest.list
 # install bootstrap tools
 sudo apt-get update && apt-get install --no-install-recommends -y \
     git \
@@ -41,12 +41,12 @@ sudo apt update && sudo apt install -y \
     ros-$ROS_DISTRO-desktop \
     && rm -rf /var/lib/apt/lists/*
 
-echo "source /opt/ros/$ROS_DISTRO/setup.bash" > ~/.bashrc
+echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 
 ## gazebo-ros-pkgs for gazebo9
-echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list
+echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" >> /etc/apt/sources.list.d/gazebo-stable.list
 # setup keys
 wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 # install gazebo9
@@ -61,7 +61,7 @@ sudo apt-get update && sudo apt-get install -y \
 
 
 ## dependencies for ignition
-echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list
+echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" >> /etc/apt/sources.list.d/gazebo-stable.list
 wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 
 sudo apt update && apt install -y g++-8
